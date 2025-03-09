@@ -23,6 +23,25 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 		}
 	};
 
+	// Function to delete a media item
+	const deleteMedia = async (id: number) => {
+		try {
+			const response = await fetch(`${API_URL}/${id}`, {
+				method: 'DELETE',
+			});
+			if (response.ok) {
+				console.log(`Media with ID ${id} deleted successfully.`);
+				fetchMedia(); // Refresh the media list after deletion
+			} else {
+				console.error(
+					`Failed to delete media with ID ${id}. Response status: ${response.status}`
+				);
+			}
+		} catch (error) {
+			console.error('Error deleting media:', error);
+		}
+	};
+
 	// useEffect to fetch media when the component mounts
 	useEffect(() => {
 		fetchMedia();
@@ -34,11 +53,7 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 			{/* Grid to display media items */}
 			<div className="media-grid">
 				{mediaList.map((media) => (
-					<div
-						key={media.id}
-						className="card"
-						onClick={() => setSelectedMedia(media)}
-					>
+					<div key={media.id} className="card">
 						<h4>{media.title}</h4>
 						<p>
 							<strong>Type:</strong> {media.type}
@@ -54,6 +69,10 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 								<span>No review</span>
 							)}
 						</p>
+						<div className="card-actions">
+							<button onClick={() => setSelectedMedia(media)}>View</button>
+							<button onClick={() => deleteMedia(media.id)}>Delete</button>
+						</div>
 					</div>
 				))}
 			</div>

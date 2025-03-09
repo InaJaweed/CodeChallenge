@@ -35,6 +35,25 @@ body {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.card-actions {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.card-actions button {
+	background-color: #444;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.card-actions button:hover {
+	background-color: #666;
+}
+
 h3 {
 	margin-bottom: 20px; /* Add space below the title */
 }

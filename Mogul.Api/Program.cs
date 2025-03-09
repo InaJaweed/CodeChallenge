@@ -66,5 +66,18 @@ app.MapGet("/media/{id}/reviews", (int id) =>
     return media.Review != null ? Results.Ok(media.Review) : Results.NotFound("No review found for this media.");
 });
 
+// DELETE /media/{id} - Delete a movie or TV show
+app.MapDelete("/media/{id}", (int id) =>
+{
+    var media = mediaList.FirstOrDefault(m => m.Id == id);
+    if (media == null)
+    {
+        return Results.NotFound($"Media with ID {id} not found.");
+    }
+
+    mediaList.Remove(media);
+    return Results.NoContent();
+});
+
 // Start the server
 app.Run();
