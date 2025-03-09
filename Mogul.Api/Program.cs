@@ -23,6 +23,7 @@ var nextId = 1;
 // Helper function to normalize titles
 string NormalizeTitle(string title)
 {
+    // Remove whitespace and punctuation, and convert to lowercase
     return Regex.Replace(title, @"\s+|[^\w]", "").ToLower();
 }
 
@@ -43,6 +44,7 @@ app.MapPost("/media", (Media media) =>
         return Results.BadRequest("A media item with the same title and type already exists.");
     }
 
+    // Assign a unique ID and add the media item to the list
     media.Id = nextId++;
     mediaList.Add(media);
     return Results.Created($"/media/{media.Id}", media);
@@ -51,6 +53,7 @@ app.MapPost("/media", (Media media) =>
 // POST /media/{id}/reviews - Add or Update Review
 app.MapPost("/media/{id}/reviews", (int id, Review review) =>
 {
+    // Find the media item by ID
     var media = mediaList.FirstOrDefault(m => m.Id == id);
     if (media == null)
     {
@@ -72,24 +75,28 @@ app.MapPost("/media/{id}/reviews", (int id, Review review) =>
 // GET /media/{id}/reviews - Retrieve Review for a Media Item
 app.MapGet("/media/{id}/reviews", (int id) =>
 {
+    // Find the media item by ID
     var media = mediaList.FirstOrDefault(m => m.Id == id);
     if (media == null)
     {
         return Results.NotFound($"Media with ID {id} not found.");
     }
 
+    // Return the review if it exists, otherwise return not found
     return media.Review != null ? Results.Ok(media.Review) : Results.NotFound("No review found for this media.");
 });
 
 // DELETE /media/{id} - Delete a movie or TV show
 app.MapDelete("/media/{id}", (int id) =>
 {
+    // Find the media item by ID
     var media = mediaList.FirstOrDefault(m => m.Id == id);
     if (media == null)
     {
         return Results.NotFound($"Media with ID {id} not found.");
     }
 
+    // Remove the media item from the list
     mediaList.Remove(media);
     return Results.NoContent();
 });

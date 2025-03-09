@@ -8,6 +8,7 @@ interface MediaModalProps {
 	onReviewSubmitted: () => void;
 }
 
+// Component to display detailed information about a media item in a modal
 const MediaModal: React.FC<MediaModalProps> = ({
 	media,
 	onClose,

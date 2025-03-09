@@ -15,8 +15,12 @@ public class Media
     public Review? Review { get; set; } // Only one review per media
 }
 
+// Represents a Review entity for a Media item
 public class Review
 {
-    public int Rating { get; set; } // Rating between 1 and 5
-    public string Comment { get; set; } = string.Empty; // Review text
+    // Rating between 1 and 5
+    public int Rating { get; set; }
+
+    // Review text
+    public string Comment { get; set; } = string.Empty;
 }
