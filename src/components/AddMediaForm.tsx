@@ -1,12 +1,5 @@
 import { useState } from 'react';
 
-// Define the Media interface with optional 'id' and required 'title' and 'type' fields
-interface Media {
-	id?: number; // Optional because it's assigned by the backend
-	title: string;
-	type: 'Movie' | 'TV Show'; // Restrict type to either "Movie" or "TV Show"
-}
-
 // API endpoint where media data will be sent
 const API_URL = 'http://localhost:5169/media';
 
@@ -21,7 +14,7 @@ const AddMediaForm = ({ onMediaAdded }: { onMediaAdded: () => void }) => {
 		e.preventDefault(); // Prevent page reload
 
 		// Create new media object to send to the backend
-		const newMedia: Media = { title, type };
+		const newMedia = { title, type };
 
 		try {
 			// Send POST request to the backend API

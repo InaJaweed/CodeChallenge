@@ -11,4 +11,12 @@ public class Media
 
     // Type of media (e.g., "Movie" or "TV Show")
     public string Type { get; set; } = string.Empty;
+
+    public Review? Review { get; set; } // Only one review per media
+}
+
+public class Review
+{
+    public int Rating { get; set; } // Rating between 1 and 5
+    public string Comment { get; set; } = string.Empty; // Review text
 }

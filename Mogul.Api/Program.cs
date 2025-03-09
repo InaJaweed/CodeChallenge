@@ -33,5 +33,38 @@ app.MapPost("/media", (Media media) =>
     return Results.Created($"/media/{media.Id}", media);
 });
 
+// POST /media/{id}/reviews - Add or Update Review
+app.MapPost("/media/{id}/reviews", (int id, Review review) =>
+{
+    var media = mediaList.FirstOrDefault(m => m.Id == id);
+    if (media == null)
+    {
+        return Results.NotFound($"Media with ID {id} not found.");
+    }
+
+    // Validate rating (must be between 1-5)
+    if (review.Rating < 1 || review.Rating > 5)
+    {
+        return Results.BadRequest("Rating must be between 1 and 5.");
+    }
+
+    // Set or update the review
+    media.Review = review;
+    
+    return Results.Ok(media.Review);
+});
+
+// GET /media/{id}/reviews - Retrieve Review for a Media Item
+app.MapGet("/media/{id}/reviews", (int id) =>
+{
+    var media = mediaList.FirstOrDefault(m => m.Id == id);
+    if (media == null)
+    {
+        return Results.NotFound($"Media with ID {id} not found.");
+    }
+
+    return media.Review != null ? Results.Ok(media.Review) : Results.NotFound("No review found for this media.");
+});
+
 // Start the server
 app.Run();
