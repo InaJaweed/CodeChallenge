@@ -8,6 +8,7 @@ const AddMediaForm = ({ onMediaAdded }: { onMediaAdded: () => void }) => {
 	// State to manage the input values
 	const [title, setTitle] = useState(''); // Holds the title of the media
 	const [type, setType] = useState<'Movie' | 'TV Show'>('Movie'); // Holds the selected type
+	const [error, setError] = useState<string | null>(null); // Holds error message
 
 	// Handle form submission
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -31,13 +32,17 @@ const AddMediaForm = ({ onMediaAdded }: { onMediaAdded: () => void }) => {
 				// Reset form fields after successful submission
 				setTitle('');
 				setType('Movie');
+				setError(null);
 
 				// Call the parent component's function to refresh the media list
 				onMediaAdded();
 			} else {
-				console.error('Failed to add media');
+				const errorMessage = await response.text();
+				setError(errorMessage);
+				console.error('Failed to add media:', errorMessage);
 			}
 		} catch (error) {
+			setError('An error occurred while adding the media.');
 			console.error('Error:', error); // Log network errors
 		}
 	};
@@ -64,6 +69,9 @@ const AddMediaForm = ({ onMediaAdded }: { onMediaAdded: () => void }) => {
 
 			{/* Submit button */}
 			<button type="submit">Add</button>
+
+			{/* Display error message if any */}
+			{error && <p className="error">{error}</p>}
 		</form>
 	);
 };

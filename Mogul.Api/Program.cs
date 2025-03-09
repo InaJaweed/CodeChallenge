@@ -1,4 +1,5 @@
 using Mogul.Api.Models;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,12 @@ app.UseCors("AllowFrontend");
 var mediaList = new List<Media>();
 var nextId = 1;
 
+// Helper function to normalize titles
+string NormalizeTitle(string title)
+{
+    return Regex.Replace(title, @"\s+|[^\w]", "").ToLower();
+}
+
 // GET /media - List all movies and TV shows
 app.MapGet("/media", () =>
 {
@@ -28,6 +35,14 @@ app.MapGet("/media", () =>
 // POST /media - Add a new movie or TV show
 app.MapPost("/media", (Media media) =>
 {
+    // Check for duplicate entries (case-insensitive, ignoring whitespace and punctuation)
+    var normalizedTitle = NormalizeTitle(media.Title);
+    var duplicate = mediaList.Any(m => NormalizeTitle(m.Title) == normalizedTitle && m.Type == media.Type);
+    if (duplicate)
+    {
+        return Results.BadRequest("A media item with the same title and type already exists.");
+    }
+
     media.Id = nextId++;
     mediaList.Add(media);
     return Results.Created($"/media/{media.Id}", media);
