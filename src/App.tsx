@@ -6,11 +6,13 @@ import './App.css';
 const App = () => {
 	const [refresh, setRefresh] = useState(false);
 	return (
-		<div>
+		<div className="container">
 			<h2>TV & Movie Review App</h2>
 			{/* When a new media item is added, the refresh state toggles, forcing MediaList to re-render */}
 			<AddMediaForm onMediaAdded={() => setRefresh(!refresh)} />
-			<MediaList refresh={refresh} />
+			<div className="media-list-container">
+				<MediaList refresh={refresh} />
+			</div>
 		</div>
 	);
 };

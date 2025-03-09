@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Media } from '../types/Media';
-import ReviewForm from './ReviewForm';
+import MediaModal from './MediaModal';
 
+import '../App.css';
 // API endpoint where media data will be fetched from
 const API_URL = 'http://localhost:5169/media';
 
@@ -9,6 +10,7 @@ const API_URL = 'http://localhost:5169/media';
 const MediaList = ({ refresh }: { refresh: boolean }) => {
 	// State to store the list of media items
 	const [mediaList, setMediaList] = useState<Media[]>([]);
+	const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
 	// Function to fetch media data from the backend API
 	const fetchMedia = async () => {
@@ -29,64 +31,39 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 	return (
 		<div>
 			<h3>Media List</h3>
-			{/* Table to display media items */}
-			<table
-				style={{
-					border: '1px solid black',
-					borderCollapse: 'collapse',
-					width: '100%',
-				}}
-			>
-				{/* Table header with column names */}
-				<thead>
-					<tr>
-						<th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
-						<th style={{ border: '1px solid black', padding: '8px' }}>Title</th>
-						<th style={{ border: '1px solid black', padding: '8px' }}>Type</th>
-						<th style={{ border: '1px solid black', padding: '8px' }}>
-							Review
-						</th>
-						<th style={{ border: '1px solid black', padding: '8px' }}>
-							Actions
-						</th>
-					</tr>
-				</thead>
-
-				{/* Table body displaying the media list */}
-				<tbody>
-					{mediaList.map((media) => (
-						<tr key={media.id}>
-							<td style={{ border: '1px solid black', padding: '8px' }}>
-								{media.id}
-							</td>
-							<td style={{ border: '1px solid black', padding: '8px' }}>
-								{media.title}
-							</td>
-							<td style={{ border: '1px solid black', padding: '8px' }}>
-								{media.type}
-							</td>
-							<td style={{ border: '1px solid black', padding: '8px' }}>
-								{media.review ? (
-									<div>
-										<strong>Rating:</strong> {media.review.rating}/5
-										<br />
-										<strong>Comment:</strong> {media.review.comment}
-									</div>
-								) : (
-									<span>No review</span>
-								)}
-							</td>
-							<td style={{ border: '1px solid black', padding: '8px' }}>
-								<ReviewForm
-									mediaId={media.id}
-									existingReview={media.review}
-									onReviewSubmitted={fetchMedia} // Refresh after review
-								/>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			{/* Grid to display media items */}
+			<div className="media-grid">
+				{mediaList.map((media) => (
+					<div
+						key={media.id}
+						className="card"
+						onClick={() => setSelectedMedia(media)}
+					>
+						<h4>{media.title}</h4>
+						<p>
+							<strong>Type:</strong> {media.type}
+						</p>
+						<p>
+							{media.review ? (
+								<div>
+									<strong>Rating:</strong> {media.review.rating}/5
+									<br />
+									<strong>Comment:</strong> {media.review.comment}
+								</div>
+							) : (
+								<span>No review</span>
+							)}
+						</p>
+					</div>
+				))}
+			</div>
+			{selectedMedia && (
+				<MediaModal
+					media={selectedMedia}
+					onClose={() => setSelectedMedia(null)}
+					onReviewSubmitted={fetchMedia}
+				/>
+			)}
 		</div>
 	);
 };
