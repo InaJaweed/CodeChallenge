@@ -2,6 +2,7 @@ using Mogul.Api.Models;
 using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 
+// Allow the test project to access internal members of this assembly
 [assembly: InternalsVisibleTo("Mogul.Tests")]
 
 public class Program
@@ -23,7 +24,7 @@ public class Program
         var app = builder.Build();
         app.UseCors("AllowFrontend");
 
-        // Temporary in-memory storage
+        // Temporary in-memory storage for media items
         var mediaList = new List<Media>();
         var nextId = 1;
 

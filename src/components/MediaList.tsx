@@ -3,6 +3,7 @@ import { Media } from '../types/Media';
 import MediaModal from './MediaModal';
 
 import '../App.css';
+
 // API endpoint where media data will be fetched from
 const API_URL = 'http://localhost:5169/media';
 
@@ -10,39 +11,49 @@ const API_URL = 'http://localhost:5169/media';
 const MediaList = ({ refresh }: { refresh: boolean }) => {
 	// State to store the list of media items
 	const [mediaList, setMediaList] = useState<Media[]>([]);
+	// State to store the selected media item for the modal
 	const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
 	// Function to fetch media data from the backend API
 	const fetchMedia = async () => {
 		try {
-			const response = await fetch(API_URL); // Send a GET request to the API
-			const data = await response.json(); // Convert response to JSON
-			setMediaList(data); // Update the state with the fetched data
+			// Send a GET request to the API
+			const response = await fetch(API_URL);
+			// Convert response to JSON
+			const data = await response.json();
+			// Update the state with the fetched data
+			setMediaList(data);
 		} catch (error) {
-			console.error('Error fetching media:', error); // Log errors if the request fails
+			// Log errors if the request fails
+			console.error('Error fetching media:', error);
 		}
 	};
 
 	// Function to delete a media item
 	const deleteMedia = async (id: number) => {
 		try {
+			// Send a DELETE request to the API
 			const response = await fetch(`${API_URL}/${id}`, {
 				method: 'DELETE',
 			});
 			if (response.ok) {
+				// Log success message
 				console.log(`Media with ID ${id} deleted successfully.`);
-				fetchMedia(); // Refresh the media list after deletion
+				// Refresh the media list after deletion
+				fetchMedia();
 			} else {
+				// Log error message with response status
 				console.error(
 					`Failed to delete media with ID ${id}. Response status: ${response.status}`
 				);
 			}
 		} catch (error) {
+			// Log errors if the request fails
 			console.error('Error deleting media:', error);
 		}
 	};
 
-	// useEffect to fetch media when the component mounts
+	// useEffect to fetch media
 	useEffect(() => {
 		fetchMedia();
 	}, [refresh]);
@@ -61,12 +72,15 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 						<p>
 							{media.review ? (
 								<div>
-									<strong>Rating:</strong> {media.review.rating}/5
-									<br />
-									<strong>Comment:</strong> {media.review.comment}
+									<p>
+										<strong>Rating:</strong> {media.review.rating}/5
+									</p>
+									<p>
+										<strong>Comment:</strong> {media.review.comment}
+									</p>
 								</div>
 							) : (
-								<span>No review</span>
+								<p>No review</p>
 							)}
 						</p>
 						<div className="card-actions">
@@ -76,6 +90,7 @@ const MediaList = ({ refresh }: { refresh: boolean }) => {
 					</div>
 				))}
 			</div>
+			{/* Modal to display detailed information about the selected media item */}
 			{selectedMedia && (
 				<MediaModal
 					media={selectedMedia}

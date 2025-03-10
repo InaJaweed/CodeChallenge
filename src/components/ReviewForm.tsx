@@ -37,12 +37,15 @@ const ReviewForm = ({
 			);
 
 			if (response.ok) {
+				// Log success and refresh UI
 				console.log('Review added/updated');
-				onReviewSubmitted(); // Refresh UI
+				onReviewSubmitted();
 			} else {
+				// Log error message
 				console.error('Failed to submit review');
 			}
 		} catch (error) {
+			// Log error if request fails
 			console.error('Error submitting review:', error);
 		}
 	};
@@ -56,7 +59,7 @@ const ReviewForm = ({
 				min="1"
 				max="5"
 				value={rating}
-				onChange={(refresh) => setRating(Number(refresh.target.value))}
+				onChange={(e) => setRating(Number(e.target.value))}
 				required
 			/>
 			{/* Input field for review comment */}
@@ -64,7 +67,7 @@ const ReviewForm = ({
 			<input
 				type="text"
 				value={comment}
-				onChange={(refresh) => setComment(refresh.target.value)}
+				onChange={(e) => setComment(e.target.value)}
 				required
 			/>
 

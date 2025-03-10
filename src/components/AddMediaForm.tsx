@@ -11,8 +11,8 @@ const AddMediaForm = ({ onMediaAdded }: { onMediaAdded: () => void }) => {
 	const [error, setError] = useState<string | null>(null); // Holds error message
 
 	// Handle form submission
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault(); // Prevent page reload
+	const handleSubmit = async (refresh: React.FormEvent) => {
+		refresh.preventDefault(); // Prevent page reload
 
 		// Create new media object to send to the backend
 		const newMedia = { title, type };
