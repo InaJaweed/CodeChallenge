@@ -1,68 +1,34 @@
 # VIPR Code Challenge (Graduate / Junior)
-## TV & Movie Review API & Frontend Viewer  
+## TV & Movie Review API & Frontend Viewer
 
-Welcome to the **VIPR Code Challenge**! Your task is to develop **Mogul**, a simple TV & movie review application consisting of:  
+### 📌 Technical Requirements
 
-1. A **REST API** to submit/retrieve films and tv shows (media) and to submit/retrieve related reviews.
-2. A **Frontend** to capture and display the media and reviews.
+#### 🔹 Backend (**C# & .NET 7+**)
+- [x] **POST /media** - Add a new movie or TV show
+- [x] **GET /media** - List all movies and TV shows
+- [x] **POST /media/{id}/reviews** - Add a review (rating: 1-5)
+- [x] **GET /media/{id}/reviews** - Retrieve all reviews for a movie/TV show
+- [x] **Store data either in-memory or in a file**
 
-This repository provides a starter **API** and **Unit Test** project. The API follows the **Minimal API** convention.  
+#### 🔹 Frontend (Any Framework)
+- [x] **Submit, fetch and display movies & TV shows from the API**
+- [x] **Allow users to submit reviews**
+- [x] **Display reviews beneath each movie/TV show**
 
----
+## Some Thoughts and Considerations
 
-## 📌 Technical Requirements  
+### What challenges did you face?
+- The main challenge was to implement the API and frontend in a way that they could work together. I had to ensure that the API was correctly implemented and that the frontend could interact with it to submit and fetch data. I also had to consider how to store the data and how to display it in the frontend. I faced many different challenges such as handling user input, displaying data, and ensuring that the API was working correctly. I also had to consider how to structure the data and how to handle errors. Overall, it was a challenging but rewarding experience.
 
-### 🔹 Backend (**C# & .NET 7+**)  
-- Implement a **REST API** exposing the following endpoints:  
-  - `POST /media` - Add a new movie or TV show  
-  - `GET /media` - List all movies and TV shows  
-  - `POST /media/{id}/reviews` - Add a review (rating: 1-5)  
-  - `GET /media/{id}/reviews` - Retrieve all reviews for a movie/TV show  
-- Store data either **in-memory** or in a **file**  
+### What would you improve if this were a real product?
+- If this were a real product, I would improve the error handling and validation in the API to provide better feedback to users. I would also add more features to the frontend, such as pagination, search, and filtering options. Additionally, I would enhance the design and user experience of the frontend to make it more visually appealing and user-friendly. Ensure more robust unit tests and integration tests to ensure the quality of the code. Finally, I would consider adding third party api integration to fetch more data and provide more information to the users.
 
-### 🔹 Frontend (Any Framework)  
-- Use **Vanilla JavaScript, Vue, React**, or any framework you're comfortable with  
-- Submit, fetch and display movies & TV shows from the API  
-- Allow users to submit reviews  
-- Display reviews beneath each movie/TV show  
+### What did you learn from this challenge?
+- I learned how to create a REST API using C# and .NET  and how to interact with it using a frontend framework using react. I also learned how to structure and display data in a frontend application and how to handle user input and interactions. I also learned how to store data in-memory and how to retrieve and display it in the frontend. Overall, I learned a lot about full-stack development and how to create a simple web application from scratch.
 
----
+## Screenshots Of The Application
 
-## 🚀 Getting Started  
-
-1. **Fork** this repository to your **public GitHub** account  
-2. Install:  
-   - [VS Code](https://code.visualstudio.com/)  
-   - [C# Dev Kit Extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)  
-3. Refer to the [Minimal APIs Documentation](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-9.0&tabs=visual-studio-code)  
-4. If needed, run the following command:  
-
-   `dotnet dev-certs https --trust`  
-
----
-
-## 📝 Considerations  
-
-- The API and frontend should **work together** but **do not** require authentication  
-- The frontend doesn’t need to be visually appealing—**just functional**  
-- Unit tests are **optional** but encouraged (this repo includes **xUnit**, but you can use what you're comfortable with)  
-- A database is **not required**  
-- Using AI as a development aid is welcome, but be prepared to discuss your implementation!
-- Feel free to add any extra features—but **aim to complete it within 3-4 hours**
-- Consider what different/similiar properties movies and tv shows have and how this could be structured
-
----
-
-## 📩 Submission  
-
-Once you've completed the challenge:  
-
-1. **Replace this README** with your thoughts and considerations:  
-   - What challenges did you face?  
-   - What would you improve if this were a real product?  
-2. **Email** the link to your forked repository to:  
-   📧 **dotnet[at]viprsolutions.com**  
-
----
-
-🎬 **Good luck, and happy coding!** 🚀✨  
+![Add Media](/src/assets/image.png)
+![Display Media](/src/assets/image-1.png)
+![Media Modal](/src/assets/image-2.png)
+![Display Media Review](/src/assets/image-3.png)
